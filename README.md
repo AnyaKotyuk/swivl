@@ -18,7 +18,7 @@ In container from prev step run bin:console:migrations:migrate
 
 Your app on http://127.0.0.1:8888/classrooms/
 
-Some styling fixes are avoided for time saving (usually such problem doesn't exist because it's automated)
+Some styling fixes are avoided for time saving (usually such problem doesn't exist because it's automated) <br>
 Core and rest layers are devided for future app modifications
 
 
