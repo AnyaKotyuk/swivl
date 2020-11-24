@@ -12,9 +12,10 @@
 
 <b>Run app:</b><br>
 Rename .env.dist to .env and set your parameters<br>
+RUN composer install<br>
 RUN docker-compose up<br>
 RUN docker exec -it swivl_php bash<br>
-In container from prev step run bin:console:migrations:migrate<br>
+In container from prev step run bin/console doctrine:migrations:migrate<br>
 
 Your app on http://127.0.0.1:8888/classrooms/
 
