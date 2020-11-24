@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Exception\SourceNotFoundException;
@@ -37,7 +39,7 @@ class ClassroomController extends AbstractController
             $restClassRoomList[] = $classroomBuilder->createRestClassroom($classroom);
         }
 
-        return new JsonResponse([$serializer->serialize($restClassRoomList, 'json')]);
+        return new JsonResponse($serializer->serialize($restClassRoomList, 'json'), Response::HTTP_OK, [], true);
     }
 
     /**
@@ -56,7 +58,7 @@ class ClassroomController extends AbstractController
         }
         $restClassRoom = $classroomBuilder->createRestClassroom($classroom);
 
-        return new JsonResponse([$serializer->serialize($restClassRoom, 'json')]);
+        return new Response([$serializer->serialize($restClassRoom, 'json')]);
     }
 
     /**
@@ -69,6 +71,7 @@ class ClassroomController extends AbstractController
         ClassroomBuilder $classroomBuilder,
         ClassroomValidator $classroomValidator
     ) : Response {
+        /** @var RestClassroom $restClassroom */
         $restClassroom = $serializer->deserialize($request->getContent(), RestClassroom::class, 'json');
 
         $classroomValidator->validate($restClassroom);
@@ -98,6 +101,7 @@ class ClassroomController extends AbstractController
             throw new SourceNotFoundException('Classroom');
         }
 
+        /** @var RestClassroom $restClassroom */
         $restClassroom = $serializer->deserialize($request->getContent(), RestClassroom::class, 'json');
         $classroomValidator->validate($restClassroom);
 
@@ -110,7 +114,7 @@ class ClassroomController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="classroom_update", methods={"DELETE"})
+     * @Route("/{id}", name="classroom_delete", methods={"DELETE"})
      */
     public function deleteItem(
         int $id,
@@ -124,6 +128,48 @@ class ClassroomController extends AbstractController
         }
 
         $entityManager->remove($classroom);
+        $entityManager->flush();
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/{id}/activate", name="classroom_activate", methods={"PUT"})
+     */
+    public function activateItem(
+        int $id,
+        ClassroomRepository $classroomRepository,
+        EntityManagerInterface $entityManager
+    ) : Response {
+        $classroom = $classroomRepository->findOneById($id);
+
+        if (!$classroom) {
+            throw new SourceNotFoundException('Classroom');
+        }
+
+        $classroom->setActive(1);
+        $entityManager->persist($classroom);
+        $entityManager->flush();
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/{id}/deactivate", name="classroom_deactivate", methods={"PUT"})
+     */
+    public function deactivateItem(
+        int $id,
+        ClassroomRepository $classroomRepository,
+        EntityManagerInterface $entityManager
+    ) : Response {
+        $classroom = $classroomRepository->findOneById($id);
+
+        if (!$classroom) {
+            throw new SourceNotFoundException('Classroom');
+        }
+
+        $classroom->setActive(0);
+        $entityManager->persist($classroom);
         $entityManager->flush();
 
         return new Response(null, Response::HTTP_NO_CONTENT);
