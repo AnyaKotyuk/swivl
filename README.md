@@ -1,6 +1,6 @@
 # swivl
 
-<b>Routing:<b><br> 
+<b>Routing:</b><br> 
 <ul>
   <li>GET /classrooms get classroom list</li>
   <li>GET /classrooms/1 get the first classroom</li>
@@ -12,6 +12,13 @@
 
 <b>Run app:</b>
 Rename .env.dist to .env and set your parameters
-docker-compose up
+RUN docker-compose up
+RUN docker exec -it swivl_php bash
+In container from prev step run bin:console:migrations:migrate
+
+Your app on http://127.0.0.1:8888/classrooms/
+
+Some styling fixes are avoided for time saving (usually such problem doesn't exist because it's automated)
+Core and rest layers are devided for future app modifications
 
 
