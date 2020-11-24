@@ -10,11 +10,11 @@
   <li>PUT /classrooms/1/deactivate set not-active status for a classroom</li>
 </ul>
 
-<b>Run app:</b>
-Rename .env.dist to .env and set your parameters
-RUN docker-compose up
-RUN docker exec -it swivl_php bash
-In container from prev step run bin:console:migrations:migrate
+<b>Run app:</b><br>
+Rename .env.dist to .env and set your parameters<br>
+RUN docker-compose up<br>
+RUN docker exec -it swivl_php bash<br>
+In container from prev step run bin:console:migrations:migrate<br>
 
 Your app on http://127.0.0.1:8888/classrooms/
 
