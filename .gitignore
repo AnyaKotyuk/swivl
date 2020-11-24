@@ -5,3 +5,6 @@
 /vendor/
 .idea
 ###< symfony/framework-bundle ###
+composer.lock
+composer.phar
+symfony.lock

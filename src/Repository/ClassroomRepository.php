@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Classroom;
@@ -28,16 +30,4 @@ class ClassroomRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-
-    /*
-    public function findOneBySomeField($value): ?Classroom
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

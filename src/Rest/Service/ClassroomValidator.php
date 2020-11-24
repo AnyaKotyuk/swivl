@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Rest\Service;
 
 use App\Exception\EmptyPropertyException;
@@ -17,7 +19,7 @@ class ClassroomValidator
             throw new EmptyPropertyException('DateCreated');
         }
 
-        if (!$restClassroom->isActive()) {
+        if (is_null($restClassroom->isActive())) {
             throw new EmptyPropertyException('isActive');
         }
     }

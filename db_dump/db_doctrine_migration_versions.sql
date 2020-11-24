@@ -1,0 +1,1 @@
+INSERT INTO db.doctrine_migration_versions (version, executed_at, execution_time) VALUES ('DoctrineMigrations\\Version20201122171922', '2020-11-24 20:51:58', 497);
